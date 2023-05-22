@@ -7,6 +7,10 @@ import toast from 'react-hot-toast';
 import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../lib/client';
 import getStripe from '../lib/getStripe';
+import Recommendation from './Recommendation';
+import ProductCard from './ProductCard';
+import styles from './ProductCard.module.css';
+import {result, result2, index1, index2} from './itemPredictor';
 
 const Cart = () => {
   const cartRef = useRef();
@@ -34,6 +38,7 @@ const Cart = () => {
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
+      
       <div className="cart-container">
         <button
         type="button"
@@ -61,9 +66,20 @@ const Cart = () => {
         )}
 
         <div className="product-container">
+        
           {cartItems.length >= 1 && cartItems.map((item) => (
+            <div className={styles['a']}>
+
+              <div className={styles['predBody']}>
+              <h2>People also bought those...</h2>
+              <div className={styles['PredProduct']}>
+
+              <ProductCard photoUrl = {result.Img_link} description = {result.Name} />
+              <ProductCard photoUrl = {result2.Img_link} description = {result2.Name} />
+              </div>
+              </div>
             <div className="product" key={item._id}>
-              <img src={urlFor(item?.image[0])} className="cart-product-image" />
+              <img src={urlFor(item?.image[0])} className="cart-product-image"  />
               <div className="item-desc">
                 <div className="flex top">
                   <h5>{item.name}</h5>
@@ -88,6 +104,7 @@ const Cart = () => {
                   </button>
                 </div>
               </div>
+            </div>
             </div>
           ))}
         </div>
